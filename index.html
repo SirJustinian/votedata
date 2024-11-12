@@ -4,40 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>By Unanimous Vote</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Add Pinyon Script font for the title -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Pinyon+Script&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background: url('https://www.transparenttextures.com/patterns/old-map.png'), 
-                        url('https://www.transparenttextures.com/patterns/aged-parchment.png');
-            background-color: #f4e1c1;
-            color: #333;
-            padding: 20px;
-            position: relative;
-            overflow: hidden;
-            animation: fadeIn 1s ease-in-out;
-        }
+body {
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background: 
+        url('https://www.transparenttextures.com/patterns/paper-fibers.png'), 
+        linear-gradient(rgba(255, 248, 230, 0.9), rgba(250, 240, 220, 0.9));
+    background-size: cover;
+    background-blend-mode: overlay;
+    color: #333;
+    padding: 20px;
+    overflow: hidden;
+    animation: fadeIn 1s ease-in-out;
+}
 
         .title {
-            font-size: 45px;
+            font-family: 'Pinyon Script', cursive;
+            font-size: 60px;
             font-weight: 700;
-            margin-bottom: 10px;
             color: #333;
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
-            text-align: center; /* Ensure the title stays centered */
-            word-wrap: break-word; /* Allow title to wrap text if needed */
+            text-align: center;
+            word-wrap: break-word;
+            position: fixed; /* Fix the title at the top */
+            top: 0; /* Position at the very top */
+            width: 100%;
+            background-color: rgba(244, 225, 193, 0.9); /* Light background for readability */
+            padding: 10px 0;
+            z-index: 10; /* Keep title on top */
         }
 
         .subheader {
             font-size: 20px;
             color: #555;
-            margin-bottom: 30px;
+            margin-top: 70px; /* Push content down due to fixed title */
             font-style: italic;
         }
 
@@ -50,6 +58,7 @@
             width: 100%;
             max-width: 900px;
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            margin-top: 20px;
         }
 
         .vote-box:hover {
@@ -59,7 +68,7 @@
 
         button {
             padding: 12px 24px;
-            background-color: #FF6F61;
+            background-color: #3C3B6E;
             color: white;
             border: none;
             border-radius: 6px;
@@ -69,7 +78,7 @@
         }
 
         button:hover {
-            background-color: #FF4A38;
+            background-color: #2B2A5B;
             transform: scale(1.05);
         }
 
@@ -79,6 +88,12 @@
             margin-bottom: 20px;
             color: #000;
             transition: opacity 0.5s ease;
+        }
+
+        .read-more {
+            color: #3C3B6E;
+            cursor: pointer;
+            font-size: 16px;
         }
 
         .congress {
@@ -127,60 +142,31 @@
             to { opacity: 1; }
         }
 
-        /* Mobile responsiveness */
         @media screen and (max-width: 768px) {
-            body {
-                padding: 10px; /* Reduce padding on smaller screens */
-            }
-
             .title {
-                font-size: 8vw; /* Adjust font size dynamically based on viewport width */
-                margin-bottom: 5px;
-                word-wrap: break-word; /* Allow the title to wrap */
-                text-align: center; /* Ensure it remains centered */
+                font-size: 8vw;
             }
 
             .subheader {
-                font-size: 16px; /* Smaller subheader text */
-                margin-bottom: 20px;
+                font-size: 16px;
             }
 
             .vote-box {
-                padding: 15px; /* Reduce padding for the vote box */
-                width: 100%; /* Ensure vote box takes full width on small screens */
+                padding: 15px;
+                width: 100%;
             }
 
             .vote-text {
-                font-size: 22px; /* Smaller font for the vote text */
+                font-size: 22px;
             }
 
-            .congress {
-                font-size: 18px; /* Smaller font for congress text */
-            }
-
-            .chamber {
-                font-size: 18px; /* Smaller font for chamber text */
-            }
-
-            .date {
-                font-size: 16px; /* Smaller font for date text */
+            .congress, .chamber, .date, .about-section div {
+                font-size: 16px;
             }
 
             button {
-                padding: 10px 20px; /* Smaller padding on buttons for mobile */
-                font-size: 16px; /* Adjust font size for buttons */
-            }
-
-            .about-section {
-                padding: 15px; /* Reduce padding in the about section */
-            }
-
-            .about-section h3 {
-                font-size: 22px; /* Smaller header font in the about section */
-            }
-
-            .about-section div {
-                font-size: 16px; /* Smaller font size for about section text */
+                padding: 10px 20px;
+                font-size: 16px;
             }
         }
     </style>
@@ -192,6 +178,7 @@
 
     <div class="vote-box">
         <div class="vote-text" id="vote-text"></div>
+        <span class="read-more" onclick="toggleReadMore()" id="read-more"></span>
         <div class="congress" id="congress"></div>
         <div class="chamber" id="chamber"></div>
         <div class="date" id="date"></div>
@@ -203,40 +190,60 @@
         <div>By Unanimous Vote is the history of America told through Congressional agreement. From treaties and education reform, to birthday wishes and a moral high horse, Congress has come to agreement in over five percent of its total votes. Most of the time, this is caused by fear, power, or ambivalence. In the rare instances, Congress comes together to unanimously enact meaningful change. What's the story behind these unanimous votes, and do we actually want them?</div>
     </div>
 
-    <!-- Include Papa Parse library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 
-    <!-- Your custom JavaScript -->
     <script>
         let votes = [];
 
-        // Load and parse the CSV file from GitHub
         Papa.parse("https://raw.githubusercontent.com/SirJustinian/votedata/main/votes.csv", {
             download: true,
             header: true,
             complete: function(results) {
-                votes = results.data; // Store the data into the votes array
-                console.log("CSV data loaded: ", results); // Log the loaded data to check
-                generateVote(); // Generate the first random vote on page load
+                votes = results.data;
+                generateVote();
             },
             error: function(error) {
-                console.error("Error loading CSV: ", error); // Log any errors
+                console.error("Error loading CSV: ", error);
                 alert("There was an error loading the CSV file.");
             }
         });
 
         function generateVote() {
-            if (votes.length === 0) return; // If no data is loaded yet, do nothing
+            if (votes.length === 0) return;
 
             const randomIndex = Math.floor(Math.random() * votes.length);
             const vote = votes[randomIndex];
+            const textLimit = 250;
 
-            document.getElementById('vote-text').textContent = `${vote.text}`;
+            if (vote.text.length > textLimit) {
+                document.getElementById('vote-text').textContent = vote.text.slice(0, textLimit) + "...";
+                document.getElementById('read-more').textContent = "Read more";
+            } else {
+                document.getElementById('vote-text').textContent = vote.text;
+                document.getElementById('read-more').textContent = "";
+            }
+
+            document.getElementById('read-more').setAttribute("data-full-text", vote.text);
             document.getElementById('congress').textContent = `${vote.congress}`;
             document.getElementById('chamber').textContent = `Chamber: ${vote.chamber}`;
             document.getElementById('date').textContent = `Date: ${vote.date}`;
+        }
+
+        function toggleReadMore() {
+            const voteText = document.getElementById('vote-text');
+            const readMore = document.getElementById('read-more');
+            const fullText = readMore.getAttribute("data-full-text");
+
+            if (voteText.textContent.endsWith("...")) {
+                voteText.textContent = fullText;
+                readMore.textContent = "Show less";
+            } else {
+                voteText.textContent = fullText.slice(0, 250) + "...";
+                readMore.textContent = "Read more";
+            }
         }
     </script>
 
 </body>
 </html>
+
