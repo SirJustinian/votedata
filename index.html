@@ -21,7 +21,9 @@
             padding: 20px;
             position: relative;
             overflow: hidden;
+            animation: fadeIn 1s ease-in-out;
         }
+
         .title {
             font-size: 45px;
             font-weight: 700;
@@ -29,12 +31,14 @@
             color: #333;
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
         }
+
         .subheader {
             font-size: 20px;
             color: #555;
             margin-bottom: 30px;
             font-style: italic;
         }
+
         .vote-box {
             text-align: center;
             background-color: rgba(255, 255, 255, 0.9);
@@ -45,10 +49,12 @@
             max-width: 900px;
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
         }
+
         .vote-box:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
         }
+
         button {
             padding: 12px 24px;
             background-color: #FF6F61;
@@ -59,10 +65,12 @@
             font-size: 18px;
             transition: background-color 0.3s, transform 0.2s ease-in-out;
         }
+
         button:hover {
             background-color: #FF4A38;
             transform: scale(1.05);
         }
+
         .vote-text {
             font-size: 28px;
             font-style: italic;
@@ -70,22 +78,26 @@
             color: #000;
             transition: opacity 0.5s ease;
         }
+
         .congress {
             font-size: 22px;
             font-weight: 500;
             margin-bottom: 10px;
             color: #000;
         }
+
         .chamber {
             font-size: 20px;
             margin-bottom: 20px;
             color: #333;
         }
+
         .date {
             font-size: 18px;
             color: #555;
             margin-bottom: 30px;
         }
+
         .about-section {
             margin-top: 40px;
             width: 100%;
@@ -95,29 +107,84 @@
             border-radius: 12px;
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
+
         .about-section h3 {
             font-size: 26px;
             color: #000;
             font-weight: 700;
             margin-bottom: 15px;
         }
+
         .about-section div {
             font-size: 18px;
             color: #333;
         }
-        body {
-            animation: fadeIn 1s ease-in-out;
-        }
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
+        }
+
+        /* Mobile responsiveness */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 10px; /* Reduce padding on smaller screens */
+            }
+
+            .title {
+                font-size: 36px; /* Smaller font size for the title on mobile */
+                margin-bottom: 5px;
+            }
+
+            .subheader {
+                font-size: 16px; /* Smaller subheader text */
+                margin-bottom: 20px;
+            }
+
+            .vote-box {
+                padding: 15px; /* Reduce padding for the vote box */
+                width: 100%; /* Ensure vote box takes full width on small screens */
+            }
+
+            .vote-text {
+                font-size: 22px; /* Smaller font for the vote text */
+            }
+
+            .congress {
+                font-size: 18px; /* Smaller font for congress text */
+            }
+
+            .chamber {
+                font-size: 18px; /* Smaller font for chamber text */
+            }
+
+            .date {
+                font-size: 16px; /* Smaller font for date text */
+            }
+
+            button {
+                padding: 10px 20px; /* Smaller padding on buttons for mobile */
+                font-size: 16px; /* Adjust font size for buttons */
+            }
+
+            .about-section {
+                padding: 15px; /* Reduce padding in the about section */
+            }
+
+            .about-section h3 {
+                font-size: 22px; /* Smaller header font in the about section */
+            }
+
+            .about-section div {
+                font-size: 16px; /* Smaller font size for about section text */
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="title">By Unanimous Vote</div>
-    <div class="subheader">116 Congresses. 108108 votes. 6271 unanimous.</div>
+    <div class="subheader">116 Congresses. 108,108 votes. 6,271 unanimous.</div>
 
     <div class="vote-box">
         <div class="vote-text" id="vote-text"></div>
