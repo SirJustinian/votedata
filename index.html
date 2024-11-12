@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Vote Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: url('https://www.transparenttextures.com/patterns/old-map.png'), 
+                        url('https://www.transparenttextures.com/patterns/aged-parchment.png');
+            background-color: #f4e1c1;
+            color: #333;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .title {
+            font-size: 45px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #333;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+        }
+        .subheader {
+            font-size: 20px;
+            color: #555;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+        .vote-box {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 900px;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .vote-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        button {
+            padding: 12px 24px;
+            background-color: #FF6F61;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s, transform 0.2s ease-in-out;
+        }
+        button:hover {
+            background-color: #FF4A38;
+            transform: scale(1.05);
+        }
+        .vote-text {
+            font-size: 28px;
+            font-style: italic;
+            margin-bottom: 20px;
+            color: #000;
+            transition: opacity 0.5s ease;
+        }
+        .congress {
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: #000;
+        }
+        .chamber {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .date {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        .about-section {
+            margin-top: 40px;
+            width: 100%;
+            max-width: 900px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .about-section h3 {
+            font-size: 26px;
+            color: #000;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        .about-section div {
+            font-size: 18px;
+            color: #333;
+        }
+        body {
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title">By Unanimous Vote</div>
+    <div class="subheader">116 Congresses. 108108 votes. 6271 unanimous.</div>
+
+    <div class="vote-box">
+        <div class="vote-text" id="vote-text"></div>
+        <div class="congress" id="congress"></div>
+        <div class="chamber" id="chamber"></div>
+        <div class="date" id="date"></div>
+        <button onclick="generateVote()">New Unanimous Vote</button>
+    </div>
+
+    <div class="about-section">
+        <h3>About</h3>
+        <div>By Unanimous Vote is the history of America told through Congressional agreement. From treaties and education reform, to birthday wishes and a moral high horse, Congress has come to agreement in over five percent of its total votes. Most of the time, this is caused by fear, power, or ambivalence. In the rare instances, Congress comes together to unanimously enact meaningful change. What's the story behind these unanimous votes, and do we actually want them?</div>
+    </div>
+
+    <!-- Include Papa Parse library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+
+    <!-- Your custom JavaScript -->
+    <script>
+        let votes = [];
+
+        // Load and parse the CSV file from GitHub
+        Papa.parse("https://raw.githubusercontent.com/SirJustinian/votedata/main/votes.csv", {
+            download: true,
+            header: true,
+            complete: function(results) {
+                votes = results.data; // Store the data into the votes array
+                console.log("CSV data loaded: ", results); // Log the loaded data to check
+                generateVote(); // Generate the first random vote on page load
+            },
+            error: function(error) {
+                console.error("Error loading CSV: ", error); // Log any errors
+                alert("There was an error loading the CSV file.");
+            }
+        });
+
+        function generateVote() {
+            if (votes.length === 0) return; // If no data is loaded yet, do nothing
+
+            const randomIndex = Math.floor(Math.random() * votes.length);
+            const vote = votes[randomIndex];
+
+            document.getElementById('vote-text').textContent = `${vote.text}`;
+            document.getElementById('congress').textContent = `${vote.congress}`;
+            document.getElementById('chamber').textContent = `Chamber: ${vote.chamber}`;
+            document.getElementById('date').textContent = `Date: ${vote.date}`;
+        }
+    </script>
+
+</body>
+</html>
