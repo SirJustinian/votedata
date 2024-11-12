@@ -30,6 +30,8 @@
             margin-bottom: 10px;
             color: #333;
             text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+            text-align: center; /* Ensure the title stays centered */
+            word-wrap: break-word; /* Allow title to wrap text if needed */
         }
 
         .subheader {
@@ -132,8 +134,10 @@
             }
 
             .title {
-                font-size: 36px; /* Smaller font size for the title on mobile */
+                font-size: 8vw; /* Adjust font size dynamically based on viewport width */
                 margin-bottom: 5px;
+                word-wrap: break-word; /* Allow the title to wrap */
+                text-align: center; /* Ensure it remains centered */
             }
 
             .subheader {
