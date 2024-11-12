@@ -9,15 +9,21 @@
     <style>
 body {
     font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh; /* Ensures full height and allows scrolling */
     margin: 0;
-    padding: 0;
     background: 
         url('https://www.transparenttextures.com/patterns/paper-fibers.png'), 
         linear-gradient(rgba(255, 248, 230, 0.9), rgba(250, 240, 220, 0.9));
     background-size: cover;
     background-blend-mode: overlay;
     color: #333;
+    padding: 0;
     overflow-x: hidden; /* Prevents horizontal scrolling */
+    animation: fadeIn 1s ease-in-out;
 }
 
         .title-container {
@@ -29,7 +35,6 @@ body {
             padding: 20px 0;
             z-index: 10; /* Keep title on top */
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         .title {
@@ -47,14 +52,6 @@ body {
             font-style: italic;
         }
 
-        .content {
-            margin-top: 180px; /* Adds space for the fixed header */
-            text-align: center;
-            max-width: 1000px; /* Prevents it from stretching too wide */
-            width: 100%;
-            margin: 0 auto; /* Centers the content */
-        }
-
         .vote-box {
             text-align: center;
             background-color: rgba(255, 255, 255, 0.9);
@@ -64,7 +61,7 @@ body {
             width: 100%;
             max-width: 900px;
             transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-            margin-top: 20px;
+            margin-top: 180px; /* Increased margin to add space between title/subtitle and text box */
         }
 
         .vote-box:hover {
@@ -184,20 +181,18 @@ body {
         <div class="subheader">116 Congresses. 108,108 votes. 6,271 unanimous.</div>
     </div>
 
-    <div class="content">
-        <div class="vote-box">
-            <div class="vote-text" id="vote-text"></div>
-            <span class="read-more" onclick="toggleReadMore()" id="read-more"></span>
-            <div class="congress" id="congress"></div>
-            <div class="chamber" id="chamber"></div>
-            <div class="date" id="date"></div>
-            <button onclick="generateVote()">New Unanimous Vote</button>
-        </div>
+    <div class="vote-box">
+        <div class="vote-text" id="vote-text"></div>
+        <span class="read-more" onclick="toggleReadMore()" id="read-more"></span>
+        <div class="congress" id="congress"></div>
+        <div class="chamber" id="chamber"></div>
+        <div class="date" id="date"></div>
+        <button onclick="generateVote()">New Unanimous Vote</button>
+    </div>
 
-        <div class="about-section">
-            <h3>About</h3>
-            <div>By Unanimous Vote is the history of America told through Congressional agreement. From treaties and education reform, to birthday wishes and a moral high horse, Congress has come to agreement in over five percent of its total votes. Most of the time, this is caused by fear, power, or ambivalence. In the rare instances, Congress comes together to unanimously enact meaningful change. What's the story behind these unanimous votes, and do we actually want them?</div>
-        </div>
+    <div class="about-section">
+        <h3>About</h3>
+        <div>By Unanimous Vote is the history of America told through Congressional agreement. From treaties and education reform, to birthday wishes and a moral high horse, Congress has come to agreement in over five percent of its total votes. Most of the time, this is caused by fear, power, or ambivalence. In the rare instances, Congress comes together to unanimously enact meaningful change. What's the story behind these unanimous votes, and do we actually want them?</div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
@@ -256,4 +251,3 @@ body {
 
 </body>
 </html>
-
