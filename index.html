@@ -247,7 +247,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script>
         let votes = [];
-        let isExpanded = false; // Track if the text is expanded
+        let isExpanded = false;
+        let currentVoteText = ""; // Store the current vote text to prevent content change
 
         Papa.parse("https://raw.githubusercontent.com/SirJustinian/votedata/main/votes.csv", {
             download: true,
@@ -265,23 +266,24 @@
         function generateVote() {
             if (votes.length === 0) return;
 
-            // Reset 'isExpanded' when generating a new vote
+            // Reset expansion state and button text
             isExpanded = false;
             document.getElementById('read-more').textContent = "Read more";
 
             const randomIndex = Math.floor(Math.random() * votes.length);
             const vote = votes[randomIndex];
-            let voteText = vote.text;
+            currentVoteText = vote.text; // Store the full vote text
 
-            // If the vote text is long, truncate it and show 'Read more'
-            if (voteText.length > 200) {
-                voteText = voteText.slice(0, 200) + "...";
-                document.getElementById('read-more').style.display = "inline"; // Show Read more
+            // Truncate the vote text if it's too long and add 'Read more' option
+            let displayText = currentVoteText;
+            if (currentVoteText.length > 200) {
+                displayText = currentVoteText.slice(0, 200) + "...";
+                document.getElementById('read-more').style.display = "inline";
             } else {
-                document.getElementById('read-more').style.display = "none"; // Hide Read more if text is short
+                document.getElementById('read-more').style.display = "none";
             }
 
-            document.getElementById('vote-text').textContent = voteText;
+            document.getElementById('vote-text').textContent = displayText;
             document.getElementById('congress').textContent = `${vote.congress}`;
             document.getElementById('chamber').textContent = `Chamber: ${vote.chamber}`;
             document.getElementById('date').textContent = `Date: ${vote.date}`;
@@ -289,13 +291,11 @@
 
         function toggleReadMore() {
             const voteTextElem = document.getElementById('vote-text');
-            const vote = votes.find(v => v.text.startsWith(voteTextElem.textContent.slice(0, 20)));
-
             if (isExpanded) {
-                voteTextElem.textContent = vote.text.slice(0, 200) + "...";
+                voteTextElem.textContent = currentVoteText.slice(0, 200) + "...";
                 document.getElementById('read-more').textContent = "Read more";
             } else {
-                voteTextElem.textContent = vote.text;
+                voteTextElem.textContent = currentVoteText;
                 document.getElementById('read-more').textContent = "Read less";
             }
             isExpanded = !isExpanded;
